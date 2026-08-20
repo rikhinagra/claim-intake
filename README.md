@@ -2,6 +2,8 @@
 
 A multi-step case intake form for a personal injury law firm. Collects case type, contact details, accident information, and injury details across five steps, then shows a confirmation with a case reference number.
 
+Live at https://claim-intake-chi.vercel.app/ (temporary Vercel URL until a custom domain is connected).
+
 ## Stack
 
 - Next.js (App Router) with TypeScript
@@ -26,8 +28,8 @@ Then open http://localhost:3000.
 - `src/lib` — form data types and site-wide config (domain, title, colors used for the social preview image)
 - `src/assets` — font files used to render the Open Graph image
 
-## Things to know before deploying
+## Things to know
 
 - There is no backend yet. Submitting the form does not send an email or save anything to a database — it just shows the confirmation screen. Wiring that up is the next piece of work.
-- `src/lib/site-config.ts` has a placeholder domain (`https://example.com`). Update `SITE_URL` there once the real domain is live, since the sitemap, robots.txt, and social preview links all read from it.
+- `src/lib/site-config.ts` currently points `SITE_URL` at the Vercel deployment URL. Once a custom domain is connected, update it there, since the sitemap, robots.txt, and social preview links all read from it.
 - Form progress is saved to the browser's session storage as people fill it out, so a refresh doesn't wipe what they typed. It clears once they submit.

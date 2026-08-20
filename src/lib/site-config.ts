@@ -1,12 +1,11 @@
 /**
- * PLACEHOLDER. Replace with the real production domain before launch.
- * Everything below (Open Graph tags, sitemap.xml, robots.txt, canonical
- * URLs) is generated from this one value, so updating it here is enough.
- * Until it's updated, social share links and search engine files will
- * point at this placeholder instead of the live site.
+ * Currently the Vercel deployment URL, since a custom domain isn't
+ * connected yet. Everything below (Open Graph tags, sitemap.xml,
+ * robots.txt, canonical URLs) is generated from this one value, so once
+ * a real domain is connected, update it here and nowhere else.
  */
 export const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL || "https://example.com"
+  process.env.NEXT_PUBLIC_SITE_URL || "https://claim-intake-chi.vercel.app"
 ).replace(/\/$/, "");
 
 export const SITE_NAME = "Case Intake";
