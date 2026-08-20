@@ -1,36 +1,33 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Claim Intake
 
-## Getting Started
+A multi-step case intake form for a personal injury law firm. Collects case type, contact details, accident information, and injury details across five steps, then shows a confirmation with a case reference number.
 
-First, run the development server:
+## Stack
+
+- Next.js (App Router) with TypeScript
+- Tailwind CSS v4
+- Framer Motion for the step transitions and animations
+- Lucide for icons
+
+## Running it locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `src/app` — routes, layout, metadata, and the generated favicon/social image files
+- `src/components/wizard` — the step-by-step form itself, including per-step components under `steps/`
+- `src/components/ui` — small shared pieces like form fields and pill selectors
+- `src/lib` — form data types and site-wide config (domain, title, colors used for the social preview image)
+- `src/assets` — font files used to render the Open Graph image
 
-## Learn More
+## Things to know before deploying
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- There is no backend yet. Submitting the form does not send an email or save anything to a database — it just shows the confirmation screen. Wiring that up is the next piece of work.
+- `src/lib/site-config.ts` has a placeholder domain (`https://example.com`). Update `SITE_URL` there once the real domain is live, since the sitemap, robots.txt, and social preview links all read from it.
+- Form progress is saved to the browser's session storage as people fill it out, so a refresh doesn't wipe what they typed. It clears once they submit.
