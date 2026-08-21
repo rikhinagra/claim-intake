@@ -45,11 +45,9 @@ function SectionHeading({ children }: { children: React.ReactNode }) {
 
 const CASE_TYPE_KEYS: Record<string, string> = {
   "Automobile Accident": "caseTypeAutomobile",
-  "Truck Accident": "caseTypeTruck",
-  "Motorcycle Accident": "caseTypeMotorcycle",
-  "Rideshare Accident": "caseTypeRideshare",
-  "Pedestrian Accident": "caseTypePedestrian",
-  Other: "caseTypeOther",
+  "Slip & Fall": "caseTypeSlipFall",
+  "Dog Bite": "caseTypeDogBite",
+  "Wrongful Death": "caseTypeWrongfulDeath",
 };
 
 export default function StepReview({ data, consentInvalid, onConsentChange }: StepReviewProps) {

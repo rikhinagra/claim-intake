@@ -38,11 +38,9 @@ export interface IntakeFormData {
 
 export const CASE_TYPES = [
   "Automobile Accident",
-  "Truck Accident",
-  "Motorcycle Accident",
-  "Rideshare Accident",
-  "Pedestrian Accident",
-  "Other",
+  "Slip & Fall",
+  "Dog Bite",
+  "Wrongful Death",
 ] as const;
 
 export const initialFormData: IntakeFormData = {
