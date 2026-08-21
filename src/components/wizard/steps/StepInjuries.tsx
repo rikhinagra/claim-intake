@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { Plus, X } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { InjuryEntry, IntakeFormData } from "@/lib/types";
 import Field from "@/components/ui/Field";
 import PillGroup from "@/components/ui/PillGroup";
@@ -13,6 +14,8 @@ interface StepInjuriesProps {
 }
 
 export default function StepInjuries({ data, update, invalid }: StepInjuriesProps) {
+  const t = useTranslations("stepInjuries");
+  const tRail = useTranslations("rail");
   const injuries = data.injuries;
 
   const updateInjury = (id: number, patch: Partial<InjuryEntry>) => {
@@ -46,12 +49,10 @@ export default function StepInjuries({ data, update, invalid }: StepInjuriesProp
     <div>
       <div className="mb-7">
         <span className="mono mb-2 block text-[11.5px] tracking-[0.1em] text-green-deep uppercase">
-          Step 4 of 5
+          {tRail("stepWord")} 4 {tRail("ofWord")} 5
         </span>
-        <h2 className="text-[25px] font-semibold">Injuries</h2>
-        <p className="mt-2 max-w-[46ch] text-[14.5px] text-charcoal-soft">
-          Add yourself and anyone else in the vehicle who was injured.
-        </p>
+        <h2 className="text-[25px] font-semibold">{t("title")}</h2>
+        <p className="mt-2 max-w-[46ch] text-[14.5px] text-charcoal-soft">{t("subtitle")}</p>
       </div>
 
       <AnimatePresence initial={false}>
@@ -71,7 +72,7 @@ export default function StepInjuries({ data, update, invalid }: StepInjuriesProp
           >
             <div className="mb-3.5 flex items-center justify-between">
               <h3 className="mono text-[12.5px] font-semibold tracking-[0.08em] text-charcoal-soft uppercase">
-                Injured Person {idx + 1}
+                {t("personLabel")} {idx + 1}
               </h3>
               {idx > 0 && (
                 <button
@@ -79,65 +80,69 @@ export default function StepInjuries({ data, update, invalid }: StepInjuriesProp
                   onClick={() => removeInjury(inj.id)}
                   className="flex items-center gap-1 rounded px-1.5 py-1 text-[12px] font-medium text-clay"
                 >
-                  <X className="h-3 w-3" /> Remove
+                  <X className="h-3 w-3" /> {t("remove")}
                 </button>
               )}
             </div>
 
             {isInvalid && (
-              <p className="-mt-1.5 mb-3.5 text-[12.5px] text-clay">
-                Enter at least a name or a description for this person.
-              </p>
+              <p className="-mt-1.5 mb-3.5 text-[12.5px] text-clay">{t("invalidMessage")}</p>
             )}
 
             <div className="grid grid-cols-2 gap-4 max-md:grid-cols-1">
-              <Field label="Full name">
+              <Field label={t("fullNameLabel")}>
                 <input
                   type="text"
-                  placeholder={idx === 0 ? "e.g. yourself" : "e.g. passenger name"}
+                  placeholder={
+                    idx === 0 ? t("fullNamePlaceholderSelf") : t("fullNamePlaceholderOther")
+                  }
                   value={inj.name}
                   onChange={(e) => updateInjury(inj.id, { name: e.target.value })}
                 />
               </Field>
-              <Field label="Relationship to you">
+              <Field label={t("relationshipLabel")}>
                 <input
                   type="text"
-                  placeholder={idx === 0 ? "Self" : "e.g. Cousin"}
+                  placeholder={
+                    idx === 0
+                      ? t("relationshipPlaceholderSelf")
+                      : t("relationshipPlaceholderOther")
+                  }
                   value={inj.relationship}
                   onChange={(e) => updateInjury(inj.id, { relationship: e.target.value })}
                 />
               </Field>
             </div>
 
-            <Field label="Description of injury">
+            <Field label={t("descriptionLabel")}>
               <input
                 type="text"
-                placeholder="e.g. Right foot pain"
+                placeholder={t("descriptionPlaceholder")}
                 value={inj.description}
                 onChange={(e) => updateInjury(inj.id, { description: e.target.value })}
               />
             </Field>
 
             <div className="grid grid-cols-2 gap-4 max-md:grid-cols-1">
-              <Field label="Has seen a doctor?">
+              <Field label={t("seenDoctorLabel")}>
                 <PillGroup
                   name={`seen-${inj.id}`}
                   value={inj.seenDoctor}
                   onChange={(v) => updateInjury(inj.id, { seenDoctor: v as InjuryEntry["seenDoctor"] })}
                   options={[
-                    { value: "Yes", label: "Yes" },
-                    { value: "No", label: "Not yet" },
+                    { value: "Yes", label: t("seenDoctorYes") },
+                    { value: "No", label: t("seenDoctorNotYet") },
                   ]}
                 />
               </Field>
-              <Field label="Willing to see a doctor?">
+              <Field label={t("willingLabel")}>
                 <PillGroup
                   name={`willing-${inj.id}`}
                   value={inj.willingToSee}
                   onChange={(v) => updateInjury(inj.id, { willingToSee: v as InjuryEntry["willingToSee"] })}
                   options={[
-                    { value: "Yes", label: "Yes" },
-                    { value: "No", label: "No" },
+                    { value: "Yes", label: t("willingYes") },
+                    { value: "No", label: t("willingNo") },
                   ]}
                 />
               </Field>
@@ -152,7 +157,7 @@ export default function StepInjuries({ data, update, invalid }: StepInjuriesProp
         onClick={addInjury}
         className="flex w-full items-center justify-center gap-2 rounded-[9px] border-[1.5px] border-dashed border-line py-3 text-[13.5px] font-semibold text-ink transition-all hover:border-green hover:bg-green-light hover:text-green-deep"
       >
-        <Plus className="h-4 w-4" /> Add another injured person
+        <Plus className="h-4 w-4" /> {t("addAnother")}
       </button>
     </div>
   );

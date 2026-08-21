@@ -1,12 +1,15 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 
 interface SuccessPanelProps {
   caseNumber: string;
 }
 
 export default function SuccessPanel({ caseNumber }: SuccessPanelProps) {
+  const t = useTranslations("successPanel");
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
@@ -33,11 +36,9 @@ export default function SuccessPanel({ caseNumber }: SuccessPanelProps) {
           />
         </svg>
       </motion.div>
-      <h2 className="text-[26px] font-semibold">Your case has been received</h2>
+      <h2 className="text-[26px] font-semibold">{t("title")}</h2>
       <p className="mx-auto mt-3.5 max-w-[44ch] text-[14.5px] text-charcoal-soft">
-        A member of our intake team will call you at the best time you
-        selected. Keep your phone nearby, most callers hear from us within a
-        few hours.
+        {t("message")}
       </p>
       <div className="mono mt-[22px] inline-block rounded-[9px] border border-dashed border-line bg-paper-2 px-5 py-2.5 text-[14px] text-ink">
         {caseNumber}

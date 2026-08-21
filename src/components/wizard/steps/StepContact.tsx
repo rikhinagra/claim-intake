@@ -1,3 +1,6 @@
+"use client";
+
+import { useTranslations } from "next-intl";
 import { IntakeFormData } from "@/lib/types";
 import Field from "@/components/ui/Field";
 
@@ -8,26 +11,26 @@ interface StepContactProps {
 }
 
 export default function StepContact({ data, update, invalidFields }: StepContactProps) {
+  const t = useTranslations("stepContact");
+  const tRail = useTranslations("rail");
   const has = (id: string) => invalidFields.has(id);
 
   return (
     <div>
       <div className="mb-7">
         <span className="mono mb-2 block text-[11.5px] tracking-[0.1em] text-green-deep uppercase">
-          Step 2 of 5
+          {tRail("stepWord")} 2 {tRail("ofWord")} 5
         </span>
-        <h2 className="text-[25px] font-semibold">Contact information</h2>
-        <p className="mt-2 max-w-[46ch] text-[14.5px] text-charcoal-soft">
-          So our intake team can reach you. We keep this confidential.
-        </p>
+        <h2 className="text-[25px] font-semibold">{t("title")}</h2>
+        <p className="mt-2 max-w-[46ch] text-[14.5px] text-charcoal-soft">{t("subtitle")}</p>
       </div>
 
       <div className="mb-4 grid grid-cols-2 gap-4 max-md:grid-cols-1">
         <Field
-          label="First name"
+          label={t("firstNameLabel")}
           required
           invalid={has("firstName")}
-          error="Enter a valid first name (letters only)."
+          error={t("firstNameError")}
         >
           <input
             type="text"
@@ -36,10 +39,10 @@ export default function StepContact({ data, update, invalidFields }: StepContact
           />
         </Field>
         <Field
-          label="Last name"
+          label={t("lastNameLabel")}
           required
           invalid={has("lastName")}
-          error="Enter a valid last name (letters only)."
+          error={t("lastNameError")}
         >
           <input
             type="text"
@@ -51,23 +54,23 @@ export default function StepContact({ data, update, invalidFields }: StepContact
 
       <div className="mb-4 grid grid-cols-2 gap-4 max-md:grid-cols-1">
         <Field
-          label="Phone"
+          label={t("phoneLabel")}
           required
           invalid={has("phone")}
-          error="Enter a valid phone number."
+          error={t("phoneError")}
         >
           <input
             type="tel"
-            placeholder="(555) 555-5555"
+            placeholder={t("phonePlaceholder")}
             value={data.phone}
             onChange={(e) => update({ phone: e.target.value })}
           />
         </Field>
         <Field
-          label="Alternative phone"
+          label={t("altPhoneLabel")}
           optional
           invalid={has("altPhone")}
-          error="Enter a valid phone number."
+          error={t("phoneError")}
         >
           <input
             type="tel"
@@ -79,10 +82,10 @@ export default function StepContact({ data, update, invalidFields }: StepContact
 
       <div className="mb-4 grid grid-cols-2 gap-4 max-md:grid-cols-1">
         <Field
-          label="Email"
+          label={t("emailLabel")}
           optional
           invalid={has("email")}
-          error="Enter a valid email address."
+          error={t("emailError")}
         >
           <input
             type="email"
@@ -90,29 +93,29 @@ export default function StepContact({ data, update, invalidFields }: StepContact
             onChange={(e) => update({ email: e.target.value })}
           />
         </Field>
-        <Field label="Preferred language" required>
+        <Field label={t("preferredLanguageLabel")} required>
           <select
             value={data.language}
             onChange={(e) => update({ language: e.target.value })}
           >
-            <option value="English">English</option>
-            <option value="Spanish">Spanish</option>
-            <option value="Other">Other</option>
+            <option value="English">{t("languageEnglish")}</option>
+            <option value="Spanish">{t("languageSpanish")}</option>
+            <option value="Other">{t("languageOther")}</option>
           </select>
         </Field>
       </div>
 
-      <Field label="Street address" optional>
+      <Field label={t("streetAddressLabel")} optional>
         <input
           type="text"
-          placeholder="2936 Paradise Rd"
+          placeholder={t("streetAddressPlaceholder")}
           value={data.address}
           onChange={(e) => update({ address: e.target.value })}
         />
       </Field>
 
       <div className="mb-4 grid grid-cols-2 gap-4 max-md:grid-cols-1">
-        <Field label="City" required invalid={has("city")} error="Required.">
+        <Field label={t("cityLabel")} required invalid={has("city")} error={t("cityError")}>
           <input
             type="text"
             value={data.city}
@@ -120,10 +123,10 @@ export default function StepContact({ data, update, invalidFields }: StepContact
           />
         </Field>
         <Field
-          label="State"
+          label={t("stateLabel")}
           required
           invalid={has("state")}
-          error="Enter a 2-letter state code (e.g. CA)."
+          error={t("stateError")}
         >
           <input
             type="text"
@@ -136,10 +139,10 @@ export default function StepContact({ data, update, invalidFields }: StepContact
       </div>
 
       <Field
-        label="ZIP code"
+        label={t("zipLabel")}
         required
         invalid={has("zip")}
-        error="Enter a valid 5-digit ZIP code."
+        error={t("zipError")}
       >
         <input
           type="text"

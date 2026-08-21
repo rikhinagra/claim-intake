@@ -1,3 +1,6 @@
+"use client";
+
+import { useTranslations } from "next-intl";
 import { IntakeFormData } from "@/lib/types";
 import Field from "@/components/ui/Field";
 import PillGroup from "@/components/ui/PillGroup";
@@ -16,25 +19,25 @@ function todayLocalISODate() {
 }
 
 export default function StepAccident({ data, update, invalid }: StepAccidentProps) {
+  const t = useTranslations("stepAccident");
+  const tRail = useTranslations("rail");
+
   return (
     <div>
       <div className="mb-7">
         <span className="mono mb-2 block text-[11.5px] tracking-[0.1em] text-green-deep uppercase">
-          Step 3 of 5
+          {tRail("stepWord")} 3 {tRail("ofWord")} 5
         </span>
-        <h2 className="text-[25px] font-semibold">What happened</h2>
-        <p className="mt-2 max-w-[46ch] text-[14.5px] text-charcoal-soft">
-          Walk us through the accident in your own words. Details help us
-          evaluate your case accurately.
-        </p>
+        <h2 className="text-[25px] font-semibold">{t("title")}</h2>
+        <p className="mt-2 max-w-[46ch] text-[14.5px] text-charcoal-soft">{t("subtitle")}</p>
       </div>
 
       <div className="mb-4 grid grid-cols-2 gap-4 max-md:grid-cols-1">
         <Field
-          label="Date of accident"
+          label={t("dateLabel")}
           required
           invalid={invalid.accDate}
-          error="Enter a valid date, not in the future."
+          error={t("dateError")}
         >
           <input
             type="date"
@@ -43,7 +46,7 @@ export default function StepAccident({ data, update, invalid }: StepAccidentProp
             onChange={(e) => update({ accDate: e.target.value })}
           />
         </Field>
-        <Field label="Approximate time" optional>
+        <Field label={t("timeLabel")} optional>
           <input
             type="time"
             value={data.accTime}
@@ -53,45 +56,45 @@ export default function StepAccident({ data, update, invalid }: StepAccidentProp
       </div>
 
       <Field
-        label="Best time to reach you"
+        label={t("bestTimeLabel")}
         required
         invalid={invalid.bestTime}
-        error="Please select an option."
+        error={t("bestTimeError")}
       >
         <PillGroup
           name="besttime"
           value={data.bestTime}
           onChange={(v) => update({ bestTime: v })}
           options={[
-            { value: "ASAP", label: "ASAP" },
-            { value: "Morning", label: "Morning" },
-            { value: "Afternoon", label: "Afternoon" },
-            { value: "Evening", label: "Evening" },
+            { value: "ASAP", label: t("bestTimeAsap") },
+            { value: "Morning", label: t("bestTimeMorning") },
+            { value: "Afternoon", label: t("bestTimeAfternoon") },
+            { value: "Evening", label: t("bestTimeEvening") },
           ]}
         />
       </Field>
 
-      <Field label="Did police respond to the scene?" optional>
+      <Field label={t("policeLabel")} optional>
         <PillGroup
           name="police"
           value={data.policeArrived}
           onChange={(v) => update({ policeArrived: v as IntakeFormData["policeArrived"] })}
           options={[
-            { value: "Yes", label: "Yes" },
-            { value: "No", label: "No" },
-            { value: "Not sure", label: "Not sure" },
+            { value: "Yes", label: t("policeYes") },
+            { value: "No", label: t("policeNo") },
+            { value: "Not sure", label: t("policeNotSure") },
           ]}
         />
       </Field>
 
       <Field
-        label="Describe what happened"
+        label={t("descriptionLabel")}
         required
         invalid={invalid.description}
-        error="Please share at least a full sentence (10+ characters)."
+        error={t("descriptionError")}
       >
         <textarea
-          placeholder="e.g. It was raining heavily and visibility was poor when..."
+          placeholder={t("descriptionPlaceholder")}
           value={data.description}
           onChange={(e) => update({ description: e.target.value })}
         />

@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { Check } from "lucide-react";
-import { STEP_LABELS } from "@/lib/types";
+import { useTranslations } from "next-intl";
 
 interface StepRailProps {
   current: number;
@@ -17,11 +17,14 @@ export default function StepRail({
   submitted,
   onStepClick,
 }: StepRailProps) {
+  const t = useTranslations("rail");
+  const steps = [t("step0"), t("step1"), t("step2"), t("step3"), t("step4")];
+
   return (
     <aside className="sticky top-5 rounded-[14px] border border-line-soft bg-card p-[22px_18px] shadow-[var(--shadow)] max-md:static max-md:p-4">
       <div className="mb-4 min-h-[52px] border-b border-dashed border-line pb-4 max-md:hidden">
         <span className="text-[10.5px] tracking-[0.12em] text-charcoal-soft uppercase">
-          Case Reference
+          {t("caseReference")}
         </span>
         <AnimatePresence mode="wait">
           {caseNumber ? (
@@ -42,7 +45,7 @@ export default function StepRail({
               exit={{ opacity: 0 }}
               className="mt-1 font-serif text-[13px] text-charcoal-soft italic"
             >
-              Assigned after contact info
+              {t("assignedAfterContactInfo")}
             </motion.div>
           )}
         </AnimatePresence>
@@ -51,14 +54,14 @@ export default function StepRail({
       <div className="hidden max-md:block">
         <div className="mb-2.5 flex items-center justify-between gap-3">
           <span className="mono text-[11px] tracking-[0.1em] text-green-deep uppercase">
-            Step {current + 1} of {STEP_LABELS.length}
+            {t("stepWord")} {current + 1} {t("ofWord")} {steps.length}
           </span>
           <span className="text-[12.5px] font-semibold text-ink">
-            {submitted ? "Complete" : STEP_LABELS[current]}
+            {submitted ? t("complete") : steps[current]}
           </span>
         </div>
         <div className="flex gap-1.5">
-          {STEP_LABELS.map((label, idx) => {
+          {steps.map((label, idx) => {
             const filled = submitted || idx <= current;
             return (
               <div
@@ -73,7 +76,7 @@ export default function StepRail({
       </div>
 
       <ol className="flex flex-col gap-0.5 max-md:hidden">
-        {STEP_LABELS.map((label, idx) => {
+        {steps.map((label, idx) => {
           const isDone = submitted || idx < current;
           const isActive = !submitted && idx === current;
           const clickable = !submitted && idx < current;

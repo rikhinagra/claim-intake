@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { IntakeFormData, initialFormData } from "@/lib/types";
 import StepRail from "./StepRail";
 import StepCase from "./steps/StepCase";
@@ -21,10 +22,10 @@ const STATE_PATTERN = /^[A-Za-z]{2}$/;
 const ZIP_PATTERN = /^\d{5}$/;
 const MIN_DESCRIPTION_LENGTH = 10;
 
-function assignCaseNumber() {
+function assignCaseNumber(prefix: string) {
   const year = new Date().getFullYear();
   const rand = Math.floor(1000 + Math.random() * 9000);
-  return `CASE NO. ${year}-${rand}`;
+  return `${prefix} ${year}-${rand}`;
 }
 
 function todayLocalISODate() {
@@ -39,6 +40,7 @@ function isValidPhone(value: string) {
 }
 
 export default function IntakeWizard() {
+  const t = useTranslations("common");
   const [current, setCurrent] = useState(0);
   const [data, setData] = useState<IntakeFormData>(initialFormData);
   const [caseNumber, setCaseNumber] = useState<string | null>(null);
@@ -166,13 +168,13 @@ export default function IntakeWizard() {
       return;
     }
     if (current === 1 && !caseNumber) {
-      setCaseNumber(assignCaseNumber());
+      setCaseNumber(assignCaseNumber(t("caseNoPrefix")));
     }
     goTo(current + 1);
   }
 
   function submitCase() {
-    const num = caseNumber ?? assignCaseNumber();
+    const num = caseNumber ?? assignCaseNumber(t("caseNoPrefix"));
     if (!caseNumber) setCaseNumber(num);
     setSubmitted(true);
     try {
@@ -246,13 +248,13 @@ export default function IntakeWizard() {
                     current === 0 ? "invisible" : ""
                   }`}
                 >
-                  <ArrowLeft className="h-4 w-4" /> Back
+                  <ArrowLeft className="h-4 w-4" /> {t("back")}
                 </button>
                 <button
                   onClick={handleNext}
                   className="flex items-center gap-2 rounded-[9px] bg-blue px-[26px] py-[13px] text-[14px] font-semibold text-white transition-all hover:bg-ink hover:shadow-[0_6px_16px_rgba(11,76,245,0.3)]"
                 >
-                  {current === TOTAL_STEPS - 1 ? "Submit My Case" : "Continue"}
+                  {current === TOTAL_STEPS - 1 ? t("submitMyCase") : t("continue")}
                   <ArrowRight className="h-4 w-4" />
                 </button>
               </div>

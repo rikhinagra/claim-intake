@@ -1,4 +1,7 @@
+"use client";
+
 import { ReactNode } from "react";
+import { useTranslations } from "next-intl";
 
 interface FieldProps {
   label: string;
@@ -21,6 +24,7 @@ export default function Field({
   style,
   className,
 }: FieldProps) {
+  const t = useTranslations("common");
   return (
     <div className={`mb-4 flex flex-col gap-[7px] ${className ?? ""}`} style={style}>
       <label className="flex items-center gap-1.5 text-[12.5px] font-semibold text-ink">
@@ -28,7 +32,7 @@ export default function Field({
         {required && <span className="text-clay text-[13px]">*</span>}
         {optional && (
           <span className="text-[11.5px] font-normal text-charcoal-soft">
-            (optional)
+            {t("optional")}
           </span>
         )}
       </label>
