@@ -29,7 +29,7 @@ export default function PillGroup({ name, options, value, onChange }: PillGroupP
             />
             <label
               htmlFor={id}
-              className={`cursor-pointer rounded-full border-[1.5px] px-[18px] py-2.5 text-[13.5px] font-medium transition-all ${
+              className={`inline-flex cursor-pointer items-center rounded-full border-[1.5px] px-[18px] py-2.5 text-[13.5px] font-medium transition-all ${
                 checked
                   ? "border-blue bg-blue text-white"
                   : "border-line bg-[#fcfdff] text-charcoal hover:border-blue/50"
