@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import { IntakeFormData, CASE_TYPES } from "@/lib/types";
 import Field from "@/components/ui/Field";
 import PillGroup from "@/components/ui/PillGroup";
+import Dropdown from "@/components/ui/Dropdown";
 
 interface StepCaseProps {
   data: IntakeFormData;
@@ -13,11 +14,9 @@ interface StepCaseProps {
 
 const CASE_TYPE_KEYS: Record<(typeof CASE_TYPES)[number], string> = {
   "Automobile Accident": "caseTypeAutomobile",
-  "Truck Accident": "caseTypeTruck",
-  "Motorcycle Accident": "caseTypeMotorcycle",
-  "Rideshare Accident": "caseTypeRideshare",
-  "Pedestrian Accident": "caseTypePedestrian",
-  Other: "caseTypeOther",
+  "Slip & Fall": "caseTypeSlipFall",
+  "Dog Bite": "caseTypeDogBite",
+  "Wrongful Death": "caseTypeWrongfulDeath",
 };
 
 export default function StepCase({ data, update, attorneyInvalid }: StepCaseProps) {
@@ -36,6 +35,7 @@ export default function StepCase({ data, update, attorneyInvalid }: StepCaseProp
 
       <Field label={t("caseTypeLabel")} required>
         <select
+          className="hidden md:block"
           value={data.caseType}
           onChange={(e) => update({ caseType: e.target.value })}
         >
@@ -45,6 +45,11 @@ export default function StepCase({ data, update, attorneyInvalid }: StepCaseProp
             </option>
           ))}
         </select>
+        <Dropdown
+          value={data.caseType}
+          onChange={(v) => update({ caseType: v })}
+          options={CASE_TYPES.map((type) => ({ value: type, label: t(CASE_TYPE_KEYS[type]) }))}
+        />
       </Field>
 
       <Field

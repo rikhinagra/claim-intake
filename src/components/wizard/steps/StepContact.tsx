@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 import { IntakeFormData } from "@/lib/types";
 import Field from "@/components/ui/Field";
+import Dropdown from "@/components/ui/Dropdown";
 
 interface StepContactProps {
   data: IntakeFormData;
@@ -95,6 +96,7 @@ export default function StepContact({ data, update, invalidFields }: StepContact
         </Field>
         <Field label={t("preferredLanguageLabel")} required>
           <select
+            className="hidden md:block"
             value={data.language}
             onChange={(e) => update({ language: e.target.value })}
           >
@@ -102,6 +104,15 @@ export default function StepContact({ data, update, invalidFields }: StepContact
             <option value="Spanish">{t("languageSpanish")}</option>
             <option value="Other">{t("languageOther")}</option>
           </select>
+          <Dropdown
+            value={data.language}
+            onChange={(v) => update({ language: v })}
+            options={[
+              { value: "English", label: t("languageEnglish") },
+              { value: "Spanish", label: t("languageSpanish") },
+              { value: "Other", label: t("languageOther") },
+            ]}
+          />
         </Field>
       </div>
 
